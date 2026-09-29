@@ -8,7 +8,7 @@
         public string Genre { get; set; } = string.Empty;
         public string Rating { get; set; } = string.Empty; // ex. PG-13
         public int Runtime { get; set; } // 120min
-        public int YearReleased { get; set; }
+        public DateTime YearReleased { get; set; } // October 31st 
         public DateTime CreatedDate { get; set; } = DateTime.Now; // timestamp for object creation
 
     }
