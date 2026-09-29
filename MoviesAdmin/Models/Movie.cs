@@ -19,7 +19,8 @@ namespace MoviesAdmin.Models
         [StringLength(8)]
         [Required]
         public int Runtime { get; set; } // 120min
-
+        [Range(1, 500)]
+        [Required]
         public DateTime YearReleased { get; set; } // October 31st 
         public DateTime CreatedDate { get; set; } = DateTime.Now; // timestamp for object creation
 
