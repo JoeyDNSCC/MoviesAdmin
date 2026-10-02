@@ -27,8 +27,9 @@ namespace MoviesAdmin.Models
         [Required]
         public int Runtime { get; set; } // 120min
 
+        [DisplayFormat(DataFormatString = "{0:MMMM d, yyyy}")]
         [Range(typeof(DateTime), "1880-01-01", "2100-12-31")]
-        public DateTime YearReleased { get; set; } // October 31st 
+        public DateTime ReleaseDate { get; set; } // October 31st 
         public DateTime CreatedDate { get; set; } = DateTime.Now; // timestamp for object creation
 
     }

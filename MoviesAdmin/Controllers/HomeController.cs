@@ -40,7 +40,7 @@ namespace MoviesAdmin.Controllers
             movie1.Rating = "PG-13";
             movie1.Genre = "Heist";
             movie1.Runtime = 110;
-            movie1.YearReleased = new DateTime(2012, 6, 3);
+            movie1.ReleaseDate = new DateTime(2012, 6, 3);
 
             Movie movie2 = new Movie();
             movie2.Id = 2;
@@ -49,7 +49,7 @@ namespace MoviesAdmin.Controllers
             movie2.Rating = "PG-13";
             movie2.Genre = "Drama";
             movie2.Runtime = 124;
-            movie2.YearReleased = new DateTime(2018, 3, 22);
+            movie2.ReleaseDate = new DateTime(2018, 3, 22);
 
             Movie movie3 = new Movie();
             movie3.Id = 3;
@@ -58,7 +58,7 @@ namespace MoviesAdmin.Controllers
             movie3.Rating = "R";
             movie3.Genre = "Fantasy";
             movie3.Runtime = 143;
-            movie3.YearReleased = new DateTime(1978, 10, 2);
+            movie3.ReleaseDate = new DateTime(1978, 10, 2);
 
             movies.Add(movie1);
             movies.Add(movie2);
