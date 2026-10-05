@@ -12,8 +12,11 @@
     <table class="table my-table">
         <thead>
             <tr>
+                @*title*@
                 <th>
-                    @Html.DisplayNameFor(model => model.Title)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" class="table-header">
+                        @Html.DisplayNameFor(model => model.Title)
+                    </a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
@@ -28,12 +31,16 @@
                     @Html.DisplayNameFor(model => model.Runtime)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ReleaseDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ReleaseDateSortParm"]" class="table-header">
+                        @Html.DisplayNameFor(model => model.ReleaseDate)
+                    </a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["CreatedDateSortParm"]" class="table-header">
+                        @Html.DisplayNameFor(model => model.CreatedDate)
+                    </a>
                 </th>
-                <th></th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -59,8 +66,13 @@
                         @Html.DisplayFor(model => item.Rating)
                     </div>
                 </td>
+                @*runtime math here*@
                 <td>
-                    @Html.DisplayFor(model => item.Runtime)
+                    @{
+                        int hours = item.Runtime / 60;
+                        int minutes = item.Runtime % 60;
+                    }
+                    @hours h @minutes.ToString("00") min
                 </td>
                 <td>
                     @Html.DisplayFor(model => item.ReleaseDate)

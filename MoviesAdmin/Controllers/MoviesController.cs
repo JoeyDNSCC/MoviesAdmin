@@ -12,11 +12,48 @@ public class MoviesController : Controller
         _context = context;
     }
 
+
+
     // GET: MOVIES
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index(string sortOrder)
     {
-        return View(await _context.Movie.ToListAsync());
+        ViewData["TitleSortParm"] = sortOrder == "title" ? "title_desc" : "title";
+        ViewData["ReleaseDateSortParm"] = sortOrder == "releaseDate" ? "releaseDate_desc" : "releaseDate";
+        ViewData["CreatedDateSortParm"] = sortOrder == "createdDate" ? "createdDate_desc" : "createdDate";
+
+        var movies = from m in _context.Movie
+                     select m;
+
+        switch (sortOrder)
+        {
+            case "title":
+                movies = movies.OrderBy(m => m.Title);
+                break;
+            case "title_desc":
+                movies = movies.OrderByDescending(m => m.Title);
+                break;
+            case "releaseDate":
+                movies = movies.OrderBy(m => m.ReleaseDate);
+                break;
+            case "releaseDate_desc":
+                movies = movies.OrderByDescending(m => m.ReleaseDate);
+                break;
+            case "createdDate":
+                movies = movies.OrderBy(m => m.CreatedDate);
+                break;
+            case "createdDate_desc":
+                movies = movies.OrderByDescending(m => m.CreatedDate);
+                break;
+            default:
+                movies = movies.OrderBy(m => m.Title);
+                break;
+        }
+
+        return View(await movies.AsNoTracking().ToListAsync());
     }
+
+
+
 
     // GET: MOVIES/Details/5
     public async Task<IActionResult> Details(int? id)
