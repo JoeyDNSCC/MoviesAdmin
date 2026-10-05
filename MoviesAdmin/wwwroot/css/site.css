@@ -97,3 +97,9 @@ body {
     background-color: #E8DBBA;
     border-color: black;
 }
+
+.big-picture {
+    max-width: 240px;
+    max-height: auto;
+
+}

@@ -33,7 +33,13 @@
 
             <div class="form-group">
                 <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
+                <select asp-for="Rating" class="form-control" />
+                    <option value="G">G</option>
+                    <option value="PG">PG</option>
+                    <option value="PG-13">PG-13</option>
+                    <option value="R">R</option>
+                    <option value="NC-17">NC-17</option>
+                </select>
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
 
@@ -54,6 +60,7 @@
                 <input asp-for="CreatedDate" class="form-control" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div> *@
+            </br>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
