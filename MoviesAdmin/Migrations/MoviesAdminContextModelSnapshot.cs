@@ -47,6 +47,9 @@ namespace MoviesAdmin.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Runtime")
                         .HasColumnType("int");
 
@@ -54,9 +57,6 @@ namespace MoviesAdmin.Migrations
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<DateTime>("YearReleased")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

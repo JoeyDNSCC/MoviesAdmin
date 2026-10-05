@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 @* <div class="min-vh-100 min-vw-100 bg-warning-subtle test-dark p-4"> *@
-    <h1>Index</h1>
+    <h1>All Movies</h1>
 
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create" class="btn btn-primary">Add Movie</a>
     </p>
-    <table class="table bg-warning-subtle border-black">
+    <table class="table my-table">
         <thead>
             <tr>
                 <th>
@@ -40,16 +40,24 @@
     @foreach (var item in Model) {
             <tr>
                 <td>
-                    @Html.DisplayFor(model => item.Title)
+                    <div class="title">
+                        @Html.DisplayFor(model => item.Title)
+                    </div>
                 </td>
                 <td>
-                    @Html.DisplayFor(model => item.Description)
+                    <div class="description">
+                        @Html.DisplayFor(model => item.Description)
+                    </div>
                 </td>
                 <td>
-                    @Html.DisplayFor(model => item.Genre)
+                    <div class="genre">
+                        @Html.DisplayFor(model => item.Genre)
+                    </div>
                 </td>
                 <td>
-                    @Html.DisplayFor(model => item.Rating)
+                    <div class="rating">
+                        @Html.DisplayFor(model => item.Rating)
+                    </div>
                 </td>
                 <td>
                     @Html.DisplayFor(model => item.Runtime)
@@ -61,9 +69,11 @@
                     @Html.DisplayFor(model => item.CreatedDate)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <div class="actions">
+                        <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Details" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Delete" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Delete</a>
+                    </div>
                 </td>
             </tr>
     }

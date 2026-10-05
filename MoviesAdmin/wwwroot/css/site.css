@@ -12,6 +12,23 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+.btn-primary {
+    --bs-btn-color: #000;
+    --bs-btn-bg: #ffca3b;
+    --bs-btn-border-color: #deb033;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #ffb300;
+    --bs-btn-hover-border-color: dba000;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #dba000;
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-bg: #ffca3b;
+    --bs-btn-disabled-border-color: #ffca3b;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -30,7 +47,53 @@ body {
   text-align: start;
 }
 
-.nav-bar {
-    background-color: #c9ad7f;
+.my-navbar {
+    /*    background-color: #c9ad7f;*/
+    background-color: #ffca3b;
+}
 
+.navbar-logo {
+    max-height: 40px;
+    max-width: auto;
+}
+
+.title {
+    width: 6vw;
+    max-height: 6vh;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+.description {
+    width: 15vw;
+    max-height: 6vh;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+.genre {
+    width: 6vw;
+    max-height: 6vh;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+.rating {
+    width: 4vw;
+    max-height: 6vh;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+/*.actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}*/
+
+.my-table th,
+.my-table td {
+    background-color: #E8DBBA;
+    border-color: black;
 }

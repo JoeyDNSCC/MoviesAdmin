@@ -15,7 +15,7 @@ namespace MoviesAdmin.Models
         [Required]
         public string Description { get; set; } = string.Empty;
 
-        [StringLength(64)]
+        [StringLength(16)]
         [Required]
         public string Genre { get; set; } = string.Empty;
         

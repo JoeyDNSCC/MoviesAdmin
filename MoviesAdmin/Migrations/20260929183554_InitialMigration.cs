@@ -22,7 +22,7 @@ namespace MoviesAdmin.Migrations
                     Genre = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Rating = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     Runtime = table.Column<int>(type: "int", maxLength: 8, nullable: false),
-                    YearReleased = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
