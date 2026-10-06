@@ -49,6 +49,7 @@ public class MoviesController : Controller
                 break;
         }
 
+        
         return View(await movies.AsNoTracking().ToListAsync());
     }
 

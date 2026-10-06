@@ -34,7 +34,7 @@ namespace MoviesAdmin.Models
         //[Range(typeof(DateTime), "01/01/1880", "12/31/2100")] // this doesnt work for some reason so we're skipping validation temporarily
         public DateTime ReleaseDate { get; set; } // October 31st 2001
 
-        [Display(Name = "Object Birth")]
+        [Display(Name = "Last Modified")] //will change actual varname later
         public DateTime CreatedDate { get; set; } = DateTime.Now; // timestamp for object creation
 
     }

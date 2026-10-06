@@ -76,28 +76,28 @@ body {
 
 .title {
     width: 6vw;
-    max-height: 6vh;
+    max-height: 60px;
     overflow-y: auto;
     white-space: normal;
     overflow-wrap: break-word;
 }
 .description {
     width: 15vw;
-    max-height: 6vh;
+    max-height: 60px;
     overflow-y: auto;
     white-space: normal;
     overflow-wrap: break-word;
 }
 .genre {
     width: 6vw;
-    max-height: 6vh;
+    max-height: 60px;
     overflow-y: auto;
     white-space: normal;
     overflow-wrap: break-word;
 }
 .rating {
     width: 4vw;
-    max-height: 6vh;
+    max-height: 60px;
     overflow-y: auto;
     white-space: normal;
     overflow-wrap: break-word;
