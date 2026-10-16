@@ -12,15 +12,18 @@
     <table class="table my-table">
         <thead>
             <tr>
-                @*title*@
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" class="table-header">
+                   @* img goes here, no header *@
+                </th>
+                <th>
+                    @*call view func on click to refresh & send the string thru to the func*@
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSort"]" class="table-header">
                         @Html.DisplayNameFor(model => model.Title)
                     </a>
                 </th>
-                <th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.Description)
-                </th>
+                </th> *@
                 <th>
                     @Html.DisplayNameFor(model => model.Genre)
                 </th>
@@ -30,13 +33,14 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Runtime)
                 </th>
+                @*same thing but for dates*@
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ReleaseDateSortParm"]" class="table-header">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ReleaseDateSort"]" class="table-header">
                         @Html.DisplayNameFor(model => model.ReleaseDate)
                     </a>
                 </th>
                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["CreatedDateSortParm"]" class="table-header">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["CreatedDateSort"]" class="table-header">
                         @Html.DisplayNameFor(model => model.CreatedDate)
                     </a>
                 </th>
@@ -47,15 +51,18 @@
     @foreach (var item in Model) {
             <tr>
                 <td>
+                    <img src="@item.ImageUrl" alt="@item.Title" class="thumbnail" />
+                </td>
+                <td>
                     <div class="title">
                         @Html.DisplayFor(model => item.Title)
                     </div>
                 </td>
-                <td>
+                @* <td>
                     <div class="description">
                         @Html.DisplayFor(model => item.Description)
                     </div>
-                </td>
+                </td> *@
                 <td>
                     <div class="genre">
                         @Html.DisplayFor(model => item.Genre)

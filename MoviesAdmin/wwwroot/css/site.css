@@ -1,3 +1,16 @@
+:root {
+    --theme-primary: #ffca3b;
+    --theme-secondary: #ffb300;
+    --theme-body-bg: #fff3cd;
+    --theme-element-bg: #e8dbba;
+    --theme-border: #deb033;
+
+    --bs-primary:var(--theme-primary);
+    --bs-secondary:var(--theme-secondary);
+    --bs-body-bg:var(--them-body-bg);
+    --bs-border-color:var(--theme-border);
+}
+
 html {
   font-size: 14px;
 }
@@ -65,13 +78,18 @@ body {
 }
 
 .my-navbar {
-    /*    background-color: #c9ad7f;*/
+    background-color: #c9ad7f;
     background-color: #ffca3b;
 }
 
 .navbar-logo {
     max-height: 40px;
     max-width: auto;
+}
+
+.thumbnail{
+    width: auto;
+    max-height: 60px;
 }
 
 .title {
@@ -102,12 +120,12 @@ body {
     white-space: normal;
     overflow-wrap: break-word;
 }
-/*.actions {
+.actions {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-}*/
+}
 
 .my-table th,
 .my-table td {

@@ -2,14 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
+using MoviesAdmin.Services;
 
 public class MoviesController : Controller
 {
     private readonly MoviesAdminContext _context;
-
-    public MoviesController(MoviesAdminContext context)
+    private readonly AzureStorageService _blobService;
+    public MoviesController(MoviesAdminContext context, AzureStorageService blobService)
     {
         _context = context;
+        _blobService = blobService;
     }
 
 
@@ -17,40 +19,29 @@ public class MoviesController : Controller
     // GET: MOVIES
     public async Task<IActionResult> Index(string sortOrder)
     {
-        ViewData["TitleSortParm"] = sortOrder == "title" ? "title_desc" : "title";
-        ViewData["ReleaseDateSortParm"] = sortOrder == "releaseDate" ? "releaseDate_desc" : "releaseDate";
-        ViewData["CreatedDateSortParm"] = sortOrder == "createdDate" ? "createdDate_desc" : "createdDate";
+        //take str from click event & determine if asc/desc
+        ViewData["TitleSort"] = sortOrder == "title" ? "title_desc" : "title";
+        ViewData["ReleaseDateSort"] = sortOrder == "releaseDate" ? "releaseDate_desc" : "releaseDate";
+        ViewData["CreatedDateSort"] = sortOrder == "createdDate" ? "createdDate_desc" : "createdDate";
 
         var movies = from m in _context.Movie
                      select m;
 
-        switch (sortOrder)
+        //switchcases are the devils elif
+        movies = sortOrder switch
         {
-            case "title":
-                movies = movies.OrderBy(m => m.Title);
-                break;
-            case "title_desc":
-                movies = movies.OrderByDescending(m => m.Title);
-                break;
-            case "releaseDate":
-                movies = movies.OrderBy(m => m.ReleaseDate);
-                break;
-            case "releaseDate_desc":
-                movies = movies.OrderByDescending(m => m.ReleaseDate);
-                break;
-            case "createdDate":
-                movies = movies.OrderBy(m => m.CreatedDate);
-                break;
-            case "createdDate_desc":
-                movies = movies.OrderByDescending(m => m.CreatedDate);
-                break;
-            default:
-                movies = movies.OrderBy(m => m.Title);
-                break;
-        }
-
-        
-        return View(await movies.AsNoTracking().ToListAsync());
+            "title" => movies.OrderBy(m => m.Title),
+            "title_desc" => movies.OrderByDescending(m => m.Title),
+            "releaseDate" => movies.OrderBy(m => m.ReleaseDate),
+            "releaseDate_desc" => movies.OrderByDescending(m => m.ReleaseDate),
+            "createdDate" => movies.OrderBy(m => m.CreatedDate),
+            "createdDate_desc" => movies.OrderByDescending(m => m.CreatedDate),
+            _ => movies.OrderBy(m => m.ReleaseDate),
+        };
+        return View(await movies
+            //.AsNoTracking()
+            .ToListAsync()
+            );
     }
 
 
@@ -61,11 +52,13 @@ public class MoviesController : Controller
     {
         if (id == null)
         {
-            return NotFound();
+            return NotFound(); // return 404 if if null
         }
 
+        // retrieve movie with specified id from db
         var movie = await _context.Movie
             .FirstOrDefaultAsync(m => m.Id == id);
+
         if (movie == null)
         {
             return NotFound();
@@ -80,17 +73,35 @@ public class MoviesController : Controller
         return View();
     }
 
+    /*
+     TO-DO: Handle image being required
+     */
+
     // POST: MOVIES/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,Description,Genre,Rating,Runtime,ReleaseDate,CreatedDate")] Movie movie)
+    public async Task<IActionResult> Create([Bind("Id,Title,Description,Genre,Rating,Runtime,ReleaseDate,CreatedDate")] Movie movie, IFormFile imageFile)
     {
+        //check if model state is valid before adding movie to db
         if (ModelState.IsValid)
         {
+            //
+            // TO-DO: we need unique file names to prevent overwriting (GUID)
+            //
+
+            // save file in azure
+            string imageUrl = await _blobService.UploadFileAsync(imageFile, imageFile.FileName);
+            // save image url in 
+            movie.ImageUrl = imageUrl;
+
+            // save record in database
             _context.Add(movie);
             await _context.SaveChangesAsync();
+
+
+            // Redirect to the index action after successfully creating movie
             return RedirectToAction(nameof(Index));
         }
         return View(movie);
@@ -117,7 +128,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,Genre,Rating,Runtime,ReleaseDate,CreatedDate")] Movie movie)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,Genre,Rating,Runtime,ReleaseDate,CreatedDate,ImageUrl")] Movie movie)
     {
         if (id != movie.Id)
         {
