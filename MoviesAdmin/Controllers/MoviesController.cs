@@ -39,7 +39,7 @@ public class MoviesController : Controller
             _ => movies.OrderBy(m => m.ReleaseDate),
         };
         return View(await movies
-            //.AsNoTracking()
+            .AsNoTracking()
             .ToListAsync()
             );
     }
@@ -82,14 +82,20 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,Description,Genre,Rating,Runtime,ReleaseDate,CreatedDate")] Movie movie, IFormFile imageFile)
+    public async Task<IActionResult> Create([Bind("Id,Title,Description,Genre,Rating,Runtime,ReleaseDate,CreatedDate")] Movie movie, IFormFile? imageFile)
     {
+        // validate if image file is uploaded
+        if (imageFile == null)
+        {
+            ModelState.AddModelError("imageFile", "The image file upload is required.");
+        }
+
         //check if model state is valid before adding movie to db
         if (ModelState.IsValid)
         {
-            //
-            // TO-DO: we need unique file names to prevent overwriting (GUID)
-            //
+            // generate unique file name to prevent overwriting
+            var extension = Path.GetExtension(imageFile!.FileName);
+            var uniqueFileName = $"{Guid.NewGuid()}{extension}";
 
             // save file in azure
             string imageUrl = await _blobService.UploadFileAsync(imageFile, imageFile.FileName);
@@ -99,7 +105,6 @@ public class MoviesController : Controller
             // save record in database
             _context.Add(movie);
             await _context.SaveChangesAsync();
-
 
             // Redirect to the index action after successfully creating movie
             return RedirectToAction(nameof(Index));

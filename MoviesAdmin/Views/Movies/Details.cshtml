@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Html
 @model MoviesAdmin.Models.Movie
 
 @{
@@ -10,7 +11,7 @@
 <h4>@Html.DisplayFor(model => model.Title)</h4>
 <hr />
 <dl class="row my-table">
-    <img src="@Model.ImageUrl" alt="@Model.Title" class="img-thumbnail"/>
+    <img src="@Model.ImageUrl" alt="@Model.Title" class="w-75"/>
 @* </dl>
     <dt class = "col-sm-2">
         @Html.DisplayNameFor(model => model.Title)
@@ -23,7 +24,15 @@
         @Html.DisplayNameFor(model => model.Description)
     </dt>
     <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.Description)
+    @* replace line breaks with html line breaks in description *@
+    @{
+        var descriptionWithBreaks = new HtmlString(Model.Description
+                .Replace("\r\n", "<br/>")
+                .Replace("\n", "<br/>")
+                .Replace("\r", "<br/>"));
+
+    }
+    @descriptionWithBreaks
     </dd>
 </dl>
     <dt class = "col-sm-2">

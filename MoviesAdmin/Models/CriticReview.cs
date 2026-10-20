@@ -13,7 +13,7 @@ namespace MoviesAdmin.Models
 
         [Required]
         [Range(1,5)] // I havent tested if this is <5 or <=5
-        double Rating { get; set; }
+        int Rating { get; set; }
 
         [Required]
         bool IsPublished { get; set; }

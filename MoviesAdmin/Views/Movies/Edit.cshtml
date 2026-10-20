@@ -9,7 +9,7 @@
 @* <h4>Movie</h4> *@
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -31,9 +31,13 @@
                 <input asp-for="Genre" class="form-control" />
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
-            <div class="mb-2">
+            <div class="mb-2"> @* doesnt save state *@
                 <label asp-for="Rating" class="control-label"></label>
                 <select asp-for="Rating" class="form-control" />
+
+                    @* gonna have to remove this to fix state issue *@
+                    <option value="" selected disabled hidden>Choose here</option>
+
                     <option value="G">G</option>
                     <option value="PG">PG</option>
                     <option value="PG-13">PG-13</option>
@@ -43,7 +47,7 @@
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
             <div class="mb-2">
-                <label asp-for="Runtime" class="control-label"></label>
+                <label asp-for="Runtime" class="control-label"></label> (min)
                 <input asp-for="Runtime" class="form-control" />
                 <span asp-validation-for="Runtime" class="text-danger"></span>
             </div>
@@ -52,11 +56,11 @@
                 <input asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
-            @* <div class="mb-2">
+            <div class="mb-2">
                 <label asp-for="CreatedDate" class="control-label"></label>
-                <input type="hidden" asp-for="CreatedDate" class="form-control" />
+                <input type="hidden" asp-for="CreatedDate" class="form-control bg-secondary-subtle" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div> *@
+            </div>
             <div class="mb-2">
                 <img src="@Model.ImageUrl" alt="@Model.Title" class="w-75" />
             </div>
