@@ -1,14 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoviesAdmin.Models
 {
     public class AudienceRating
     {
         [Required]
-        int Id { get; set; }
+        public int Id { get; set; }
+
+        [ValidateNever]
+        public List<Movie> Movies { get; set; } = new List<Movie>();
 
         [Required]
-        string Title { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
 
     }
 }

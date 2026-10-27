@@ -24,12 +24,15 @@
                 @* <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th> *@
+
                 <th>
                     @Html.DisplayNameFor(model => model.Genre)
                 </th>
+
+                @*
                 <th>
                     @Html.DisplayNameFor(model => model.Rating)
-                </th>
+                </th> *@
                 <th>
                     @Html.DisplayNameFor(model => model.Runtime)
                 </th>
@@ -63,7 +66,12 @@
                         @Html.DisplayFor(model => item.Description)
                     </div>
                 </td> *@
+
                 <td>
+                    @Html.DisplayFor(model => item.Genre.Title)
+                </td>
+
+                @* <td>
                     <div class="genre">
                         @Html.DisplayFor(model => item.Genre)
                     </div>
@@ -72,7 +80,7 @@
                     <div class="rating">
                         @Html.DisplayFor(model => item.Rating)
                     </div>
-                </td>
+                </td> *@
                 @*runtime math here*@
                 <td>
                     @{
