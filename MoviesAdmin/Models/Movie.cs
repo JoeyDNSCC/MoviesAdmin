@@ -29,7 +29,7 @@ namespace MoviesAdmin.Models
 
 
         [ValidateNever]
-        public AudienceRating Rating { get; set; } = null!; // ex. PG-13
+        public AudienceRating AudienceRating { get; set; } = null!; // ex. PG-13
 
 
         [Range(1, 500)]

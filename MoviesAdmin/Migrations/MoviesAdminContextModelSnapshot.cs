@@ -103,7 +103,7 @@ namespace MoviesAdmin.Migrations
 
             modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
                 {
-                    b.HasOne("MoviesAdmin.Models.AudienceRating", "Rating")
+                    b.HasOne("MoviesAdmin.Models.AudienceRating", "AudienceRating")
                         .WithMany("Movies")
                         .HasForeignKey("AudienceRatingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -115,9 +115,9 @@ namespace MoviesAdmin.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Genre");
+                    b.Navigation("AudienceRating");
 
-                    b.Navigation("Rating");
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("MoviesAdmin.Models.AudienceRating", b =>

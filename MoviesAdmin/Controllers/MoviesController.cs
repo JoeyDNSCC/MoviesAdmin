@@ -1,10 +1,12 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
 using MoviesAdmin.Services;
 
+[Authorize]
 public class MoviesController : Controller
 {
     private readonly MoviesAdminContext _context;
@@ -41,6 +43,7 @@ public class MoviesController : Controller
         };
         return View(await movies
             .Include(m => m.Genre) // this was BEFORE the return statement in his code
+            .Include(m => m.AudienceRating)
             .AsNoTracking()
             .ToListAsync()
             );
@@ -60,6 +63,7 @@ public class MoviesController : Controller
         // retrieve movie with specified id from db
         var movie = await _context.Movie
             .Include(m => m.Genre)
+            .Include(m => m.AudienceRating)
             .FirstOrDefaultAsync(m => m.Id == id);
 
         if (movie == null)
@@ -74,7 +78,9 @@ public class MoviesController : Controller
     public IActionResult Create()
     {
         var genres = _context.Genre.ToList();
+        var ratings = _context.AudienceRating.ToList();
         ViewBag.GenreId = new SelectList(genres, "Id", "Title");
+        ViewBag.AudienceRating = new SelectList(ratings, "Id", "Title");
         return View();
     }
 
@@ -116,7 +122,9 @@ public class MoviesController : Controller
         }
 
         var genres = _context.Genre.ToList();
+        var ratings = _context.AudienceRating.ToList();
         ViewBag.GenreId = new SelectList(genres, "Id", "Title");
+        ViewBag.AudienceRating = new SelectList(ratings, "Id", "Title");
 
         return View(movie);
     }
@@ -137,7 +145,9 @@ public class MoviesController : Controller
 
         // This could be wrong
         var genres = _context.Genre.ToList();
+        var ratings = _context.AudienceRating.ToList();
         ViewBag.GenreId = new SelectList(genres, "Id", "Title");
+        ViewBag.AudienceRating = new SelectList(ratings, "Id", "Title");
 
         return View(movie);
     }

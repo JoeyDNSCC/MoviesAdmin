@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MoviesAdmin.Migrations
 {
     [DbContext(typeof(MoviesAdminContext))]
-    [Migration("20261027135346_InitialMigration")]
+    [Migration("20261027143842_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -106,7 +106,7 @@ namespace MoviesAdmin.Migrations
 
             modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
                 {
-                    b.HasOne("MoviesAdmin.Models.AudienceRating", "Rating")
+                    b.HasOne("MoviesAdmin.Models.AudienceRating", "AudienceRating")
                         .WithMany("Movies")
                         .HasForeignKey("AudienceRatingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -118,9 +118,9 @@ namespace MoviesAdmin.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Genre");
+                    b.Navigation("AudienceRating");
 
-                    b.Navigation("Rating");
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("MoviesAdmin.Models.AudienceRating", b =>
