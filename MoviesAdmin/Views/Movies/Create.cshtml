@@ -25,39 +25,25 @@
                 @* <input asp-for="Description" class="form-control" /> *@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            
-            @* <div class="mb-2">
-                <label asp-for="Genre" class="control-label"></label>
-                <input asp-for="Genre" class="form-control" />
-                <span asp-validation-for="Genre" class="text-danger"></span>
-            </div> *@
 
             <div class="mb-3">
                 <label asp-for="GenreId" class="control-label"></label>
-                <select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId"></select>
-                
+                <select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId"></select> 
             </div>
 
-            @* <div class="mb-2">
-                <label asp-for="Rating" class="control-label"></label>
-                <select asp-for="Rating" class="form-control" />
-                    <option value="" selected disabled hidden>Choose here</option>
-                    <option value="G">G</option>
-                    <option value="PG">PG</option>
-                    <option value="PG-13">PG-13</option>
-                    <option value="R">R</option>
-                    <option value="NC-17">NC-17</option>
-                </select>
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div> *@
+            <div class="mb-3">
+                <label asp-for="AudienceRatingId" class="control-label"></label>
+                <select asp-for="AudienceRatingId" class="form-select" asp-items="ViewBag.AudienceRatingId"></select>
+            </div>
 
-        <div class="mb-2">
+
+            <div class="mb-2">
             <label asp-for="Runtime" class="control-label"></label> (min)
                 <input asp-for="Runtime" class="form-control" />
                 <span asp-validation-for="Runtime" class="text-danger"></span>
             </div>
 
-        <div class="mb-2">
+            <div class="mb-2">
                 <label asp-for="ReleaseDate" class="control-label"></label>
                 <input asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
@@ -88,3 +74,5 @@
         </form>
     </div>
 </div>
+
+

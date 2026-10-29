@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th>
-                   @* img goes here, no header *@
+                    @*Sort By:*@
                 </th>
                 <th>
                     @*call view func on click to refresh & send the string thru to the func*@
@@ -28,11 +28,10 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Genre)
                 </th>
-
-                @*
+                
                 <th>
-                    @Html.DisplayNameFor(model => model.Rating)
-                </th> *@
+                    @Html.DisplayNameFor(model => model.AudienceRating)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Runtime)
                 </th>
@@ -69,6 +68,9 @@
 
                 <td>
                     @Html.DisplayFor(model => item.Genre.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.AudienceRating.Title)
                 </td>
 
                 @* <td>

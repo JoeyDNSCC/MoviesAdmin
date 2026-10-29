@@ -75,12 +75,13 @@ public class MoviesController : Controller
     }
 
     // GET: MOVIES/Create
+    [Authorize(Roles="Admin")]
     public IActionResult Create()
     {
         var genres = _context.Genre.ToList();
         var ratings = _context.AudienceRating.ToList();
         ViewBag.GenreId = new SelectList(genres, "Id", "Title");
-        ViewBag.AudienceRating = new SelectList(ratings, "Id", "Title");
+        ViewBag.AudienceRatingId = new SelectList(ratings, "Id", "Title");
         return View();
     }
 
@@ -93,6 +94,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles="Admin")]
     public async Task<IActionResult> Create([Bind("Id,Title,Description,GenreId,AudienceRatingId,Runtime,ReleaseDate,CreatedDate")] Movie movie, IFormFile? imageFile)
     {
         // validate if image file is uploaded
@@ -123,13 +125,15 @@ public class MoviesController : Controller
 
         var genres = _context.Genre.ToList();
         var ratings = _context.AudienceRating.ToList();
+
         ViewBag.GenreId = new SelectList(genres, "Id", "Title");
-        ViewBag.AudienceRating = new SelectList(ratings, "Id", "Title");
+        ViewBag.AudienceRatingId = new SelectList(ratings, "Id", "Title");
 
         return View(movie);
     }
 
     // GET: MOVIES/Edit/5
+    [Authorize(Roles="Admin")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -147,7 +151,7 @@ public class MoviesController : Controller
         var genres = _context.Genre.ToList();
         var ratings = _context.AudienceRating.ToList();
         ViewBag.GenreId = new SelectList(genres, "Id", "Title");
-        ViewBag.AudienceRating = new SelectList(ratings, "Id", "Title");
+        ViewBag.AudienceRatingId = new SelectList(ratings, "Id", "Title");
 
         return View(movie);
     }
@@ -157,6 +161,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles="Admin")]
     public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,GenreId,AudienceRatingId,Runtime,ReleaseDate,CreatedDate,ImageUrl")] Movie movie)
     {
         if (id != movie.Id)
@@ -188,6 +193,7 @@ public class MoviesController : Controller
     }
 
     // GET: MOVIES/Delete/5
+    [Authorize(Roles="Admin")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -208,6 +214,7 @@ public class MoviesController : Controller
     // POST: MOVIES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles="Admin")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var movie = await _context.Movie.FindAsync(id);

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
 
-[Authorize]
+[Authorize(Roles="Admin")]
 public class GenresController : Controller
 {
     private readonly MoviesAdminContext _context;
