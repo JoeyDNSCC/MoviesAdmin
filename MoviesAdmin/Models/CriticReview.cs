@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoviesAdmin.Models
 {
@@ -6,6 +7,15 @@ namespace MoviesAdmin.Models
     {
         [Required]
         public int Id { get; set; }
+
+        // foreign 
+        [Required]
+        public int MovieId { get; set; }
+
+        // navigation property
+        [ValidateNever]
+        [ScaffoldColumn(false)]
+        public Movie Movie { get; set; } = null!;
 
         [Required]
         [MaxLength(2048)] //give the critics plenty of space to explain their position
@@ -19,9 +29,9 @@ namespace MoviesAdmin.Models
         public bool IsPublished { get; set; }
 
         [Required]
-        public string CreatedBy { get; set; } //not sure how our users are going to be stored / formatted yet
+        public string CreatedBy { get; set; } = string.Empty;   //not sure how our users are going to be stored / formatted yet
 
-        [Required]
+        [ScaffoldColumn(false)]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

@@ -9,10 +9,12 @@ namespace MoviesAdmin.Models
         public int Id { get; set; }
 
         [ValidateNever]
+        [ScaffoldColumn(false)]
         public List<Movie> Movies { get; set; } = new List<Movie>();
 
         [Required]
         public string Title { get; set; } = string.Empty;
-
+        
+        //TO-DO: add sort-order field
     }
 }

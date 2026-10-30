@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MoviesAdmin;
 using MoviesAdmin.Models;
 using MoviesAdmin.Services;
 
@@ -17,11 +18,20 @@ public class MoviesController : Controller
         _blobService = blobService;
     }
 
-
+    /*
+     * TO-DO: allow sorting by all fields
+     */
 
     // GET: MOVIES
     public async Task<IActionResult> Index(string sortOrder)
     {
+        var user = User.GetUserId();
+        if (user != null)
+        {
+            Console.WriteLine("Logged in user: " + user);
+        }
+
+
         //take str from click event & determine if asc/desc
         ViewData["TitleSort"] = sortOrder == "title" ? "title_desc" : "title";
         ViewData["ReleaseDateSort"] = sortOrder == "releaseDate" ? "releaseDate_desc" : "releaseDate";

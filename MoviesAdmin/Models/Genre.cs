@@ -9,6 +9,7 @@ namespace MoviesAdmin.Models
         public int Id { get; set; }
 
         [ValidateNever]
+        [ScaffoldColumn(false)]
         public List<Movie> Movies { get; set; } = new List<Movie>();
 
         [Required]

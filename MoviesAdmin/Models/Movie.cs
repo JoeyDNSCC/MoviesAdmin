@@ -13,6 +13,10 @@ namespace MoviesAdmin.Models
         public int GenreId { get; set; }
         public int AudienceRatingId { get; set; }
 
+        [ValidateNever]
+        [ScaffoldColumn(false)]
+        public List<CriticReview> Reviews { get; set; } = new List<CriticReview>();
+
 
         [StringLength(256)]
         [Required]
@@ -25,10 +29,12 @@ namespace MoviesAdmin.Models
 
 
         [ValidateNever]
+        [ScaffoldColumn(false)]
         public Genre Genre { get; set; } = null!;
 
 
         [ValidateNever]
+        [ScaffoldColumn(false)]
         public AudienceRating AudienceRating { get; set; } = null!; // ex. PG-13
 
 

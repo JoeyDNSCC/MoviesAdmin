@@ -17,30 +17,34 @@
             <input type="hidden" asp-for="ImageUrl" />
 
             <div class="mb-2">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="mb-2">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="form-label"></label>
                 <textarea asp-for="Description" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             @* <div class="mb-2">
-                <label asp-for="Genre" class="control-label"></label>
+                <label asp-for="Genre" class="form-label"></label>
                 <input asp-for="Genre" class="form-control" />
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
             *@
             
             <div class="mb-3">
-                <label asp-for="GenreId" class="control-label"></label>
+                <label asp-for="GenreId" class="form-label">Genre</label>
                 <select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AudienceRatingId" class="form-label">Rating</label>
+                <select asp-for="AudienceRatingId" class="form-select" asp-items="ViewBag.AudienceRatingId"></select>
             </div>
 
             @*
             <div class="mb-2">
-                <label asp-for="Rating" class="control-label"></label>
+                <label asp-for="Rating" class="form-label"></label>
                 <select asp-for="Rating" class="form-control" />
 
 
@@ -55,17 +59,17 @@
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div> *@
             <div class="mb-2">
-                <label asp-for="Runtime" class="control-label"></label> (min)
+                <label asp-for="Runtime" class="form-label"></label> (min)
                 <input asp-for="Runtime" class="form-control" />
                 <span asp-validation-for="Runtime" class="text-danger"></span>
             </div>
             <div class="mb-2">
-                <label asp-for="ReleaseDate" class="control-label"></label>
+                <label asp-for="ReleaseDate" class="form-label"></label>
                 <input asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
             <div class="mb-2">
-                <label asp-for="CreatedDate" class="control-label"></label>
+                <label asp-for="CreatedDate" class="form-label"></label>
                 <input type="hidden" asp-for="CreatedDate" class="form-control bg-secondary-subtle" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
