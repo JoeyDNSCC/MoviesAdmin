@@ -33,6 +33,9 @@ namespace MoviesAdmin.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("sortOrder")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("AudienceRating");

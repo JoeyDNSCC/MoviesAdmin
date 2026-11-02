@@ -17,7 +17,9 @@ public class AudienceRatingsController : Controller
     // GET: AUDIENCERATINGS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.AudienceRating.ToListAsync());
+        return View(await _context.AudienceRating
+            .Include(a => a.Movies)
+            .ToListAsync());
     }
 
     // GET: AUDIENCERATINGS/Details/5
@@ -29,6 +31,7 @@ public class AudienceRatingsController : Controller
         }
 
         var audiencerating = await _context.AudienceRating
+            .Include(a => a.Movies)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (audiencerating == null)
         {
@@ -49,7 +52,7 @@ public class AudienceRatingsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Movies,Title")] AudienceRating audiencerating)
+    public async Task<IActionResult> Create([Bind("Id,Title,sortOrder")] AudienceRating audiencerating)
     {
         if (ModelState.IsValid)
         {
@@ -81,7 +84,7 @@ public class AudienceRatingsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Movies,Title")] AudienceRating audiencerating)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Movies,Title,sortOrder")] AudienceRating audiencerating)
     {
         if (id != audiencerating.Id)
         {
@@ -120,6 +123,7 @@ public class AudienceRatingsController : Controller
         }
 
         var audiencerating = await _context.AudienceRating
+            .Include(a => a.Movies)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (audiencerating == null)
         {

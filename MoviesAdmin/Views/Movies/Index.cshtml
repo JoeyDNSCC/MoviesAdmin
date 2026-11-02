@@ -16,30 +16,28 @@
 <table class="table my-table">
         <thead>
             <tr>
-                <th>
-                    @*Sort By:*@
-                </th>
-                <th>
-                    @*call view func on click to refresh & send the string thru to the func*@
+                <th>@*Sort By:*@</th>
+
+                <th> @*call view onclick to refresh page & send the string thru param*@
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSort"]" class="table-header">
                         @Html.DisplayNameFor(model => model.Title)
                     </a>
                 </th>
-                @* <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th> *@
-
                 <th>
-                    @Html.DisplayNameFor(model => model.Genre)
-                </th>
-                
-                <th>
-                    @Html.DisplayNameFor(model => model.AudienceRating)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["GenreSort"]" class="table-header">
+                        @Html.DisplayNameFor(model => model.Genre)
+                    </a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Runtime)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["RatingSort"]" class="table-header">
+                        @Html.DisplayNameFor(model => model.AudienceRating)
+                    </a>
                 </th>
-                @*same thing but for dates*@
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["RuntimeSort"]" class="table-header">
+                        @Html.DisplayNameFor(model => model.Runtime)
+                    </a>
+                </th>
                 <th>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["ReleaseDateSort"]" class="table-header">
                         @Html.DisplayNameFor(model => model.ReleaseDate)
@@ -50,6 +48,7 @@
                         @Html.DisplayNameFor(model => model.CreatedDate)
                     </a>
                 </th>
+
                 <th>Actions</th>
             </tr>
         </thead>
@@ -64,11 +63,7 @@
                         @Html.DisplayFor(model => item.Title)
                     </div>
                 </td>
-                @* <td>
-                    <div class="description">
-                        @Html.DisplayFor(model => item.Description)
-                    </div>
-                </td> *@
+
 
                 <td>
                     @Html.DisplayFor(model => item.Genre.Title)
@@ -77,16 +72,7 @@
                     @Html.DisplayFor(model => item.AudienceRating.Title)
                 </td>
 
-                @* <td>
-                    <div class="genre">
-                        @Html.DisplayFor(model => item.Genre)
-                    </div>
-                </td>
-                <td>
-                    <div class="rating">
-                        @Html.DisplayFor(model => item.Rating)
-                    </div>
-                </td> *@
+
                 @*runtime math here*@
                 <td>
                     @{
@@ -103,9 +89,15 @@
                 </td>
                 <td>
                     <div class="actions">
-                        <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="Details" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Details</a>
-                        <a asp-action="Delete" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Delete</a>
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Details" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Delete" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Delete</a>
+                        } else
+                        {
+                            <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a>
+                        }
                     </div>
                 </td>
             </tr>

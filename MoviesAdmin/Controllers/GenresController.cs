@@ -17,7 +17,9 @@ public class GenresController : Controller
     // GET: GENRES
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Genre.ToListAsync());
+        return View(await _context.Genre
+            .Include(m => m.Movies)
+            .ToListAsync());
     }
 
     // GET: GENRES/Details/5
@@ -29,6 +31,7 @@ public class GenresController : Controller
         }
 
         var genre = await _context.Genre
+            .Include(m => m.Movies)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (genre == null)
         {
@@ -49,7 +52,7 @@ public class GenresController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Movies,Title")] Genre genre)
+    public async Task<IActionResult> Create([Bind("Id,Title")] Genre genre)
     {
         if (ModelState.IsValid)
         {
@@ -81,7 +84,7 @@ public class GenresController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Movies,Title")] Genre genre)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title")] Genre genre)
     {
         if (id != genre.Id)
         {
@@ -120,6 +123,7 @@ public class GenresController : Controller
         }
 
         var genre = await _context.Genre
+            .Include(m => m.Movies)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (genre == null)
         {

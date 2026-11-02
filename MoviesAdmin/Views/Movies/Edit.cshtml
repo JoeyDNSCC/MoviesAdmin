@@ -26,13 +26,6 @@
                 <textarea asp-for="Description" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            @* <div class="mb-2">
-                <label asp-for="Genre" class="form-label"></label>
-                <input asp-for="Genre" class="form-control" />
-                <span asp-validation-for="Genre" class="text-danger"></span>
-            </div>
-            *@
-            
             <div class="mb-3">
                 <label asp-for="GenreId" class="form-label">Genre</label>
                 <select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId"></select>
@@ -41,40 +34,24 @@
                 <label asp-for="AudienceRatingId" class="form-label">Rating</label>
                 <select asp-for="AudienceRatingId" class="form-select" asp-items="ViewBag.AudienceRatingId"></select>
             </div>
-
-            @*
-            <div class="mb-2">
-                <label asp-for="Rating" class="form-label"></label>
-                <select asp-for="Rating" class="form-control" />
-
-
-                    <option value="" selected disabled hidden>Choose here</option>
-
-                    <option value="G">G</option>
-                    <option value="PG">PG</option>
-                    <option value="PG-13">PG-13</option>
-                    <option value="R">R</option>
-                    <option value="NC-17">NC-17</option>
-                </select>
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div> *@
             <div class="mb-2">
                 <label asp-for="Runtime" class="form-label"></label> (min)
                 <input asp-for="Runtime" class="form-control" />
                 <span asp-validation-for="Runtime" class="text-danger"></span>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <label asp-for="ReleaseDate" class="form-label"></label>
                 <input asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
             <div class="mb-2">
-                <label asp-for="CreatedDate" class="form-label"></label>
-                <input type="hidden" asp-for="CreatedDate" class="form-control bg-secondary-subtle" />
+                <label asp-for="CreatedDate" hidden class="form-label"></label>
+                <input type="hidden" asp-for="CreatedDate" class="form-control" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
+
             <div class="mb-2">
-                <img src="@Model.ImageUrl" alt="@Model.Title" class="w-75" />
+                <img src="@Model.ImageUrl" alt="@Model.Title" class="w-75 img-thumbnail" />
             </div>
             <div class="mb-2">
                 <input type="submit" value="Save" class="btn btn-primary" />

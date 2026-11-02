@@ -14,7 +14,11 @@ namespace MoviesAdmin.Models
 
         [Required]
         public string Title { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name ="Sort Order")]
+        public int sortOrder { get; set; }
         
-        //TO-DO: add sort-order field
+
     }
 }

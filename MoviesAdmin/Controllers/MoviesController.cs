@@ -12,15 +12,15 @@ public class MoviesController : Controller
 {
     private readonly MoviesAdminContext _context;
     private readonly AzureStorageService _blobService;
+
+    // Constructor
     public MoviesController(MoviesAdminContext context, AzureStorageService blobService)
     {
         _context = context;
         _blobService = blobService;
     }
 
-    /*
-     * TO-DO: allow sorting by all fields
-     */
+
 
     // GET: MOVIES
     public async Task<IActionResult> Index(string sortOrder)
@@ -30,12 +30,17 @@ public class MoviesController : Controller
         {
             Console.WriteLine("Logged in user: " + user);
         }
-
+        
+        // TO-DO: allow sorting by all fields
 
         //take str from click event & determine if asc/desc
         ViewData["TitleSort"] = sortOrder == "title" ? "title_desc" : "title";
+        ViewData["GenreSort"] = sortOrder == "genre" ? "genre_desc" : "genre";
+        ViewData["RatingSort"] = sortOrder == "rating" ? "rating_desc" : "rating";
+        ViewData["RuntimeSort"] = sortOrder == "runtime" ? "runtime_desc" : "runtime";
         ViewData["ReleaseDateSort"] = sortOrder == "releaseDate" ? "releaseDate_desc" : "releaseDate";
         ViewData["CreatedDateSort"] = sortOrder == "createdDate" ? "createdDate_desc" : "createdDate";
+
 
         var movies = from m in _context.Movie
                      select m;
@@ -45,6 +50,12 @@ public class MoviesController : Controller
         {
             "title" => movies.OrderBy(m => m.Title),
             "title_desc" => movies.OrderByDescending(m => m.Title),
+            "genre" => movies.OrderBy(m => m.Genre.Title),
+            "genre_desc" => movies.OrderByDescending(m => m.Genre.Title),
+            "rating" => movies.OrderBy(m => m.AudienceRating.Title),
+            "rating_desc" => movies.OrderByDescending(m => m.AudienceRating.Title),
+            "runtime" => movies.OrderBy(m => m.Runtime),
+            "runtime_desc" => movies.OrderByDescending(m => m.Runtime),
             "releaseDate" => movies.OrderBy(m => m.ReleaseDate),
             "releaseDate_desc" => movies.OrderByDescending(m => m.ReleaseDate),
             "createdDate" => movies.OrderBy(m => m.CreatedDate),
