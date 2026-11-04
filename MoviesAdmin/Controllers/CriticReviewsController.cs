@@ -1,21 +1,42 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using MoviesAdmin;
 using MoviesAdmin.Models;
 
 public class CriticReviewsController : Controller
 {
+    // read-only must be initialized in constructor
     private readonly MoviesAdminContext _context;
 
+    // currently logged in user
+    private string? _userId;
+
+    // Constructor
     public CriticReviewsController(MoviesAdminContext context)
     {
         _context = context;
+        //_userId = User.GetUserId();
+    }
+    //user not available when constructor is call
+    // OnActionExecuting() is called after constructor is called, but before action method is called
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        base.OnActionExecuting(context);
+        _userId = User.GetUserId();
     }
 
     // GET: CRITICREVIEWS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.CriticReview.ToListAsync());
+        // get reviews for currently logged-in user
+        var reviews = await _context.CriticReview
+            .Where(m => m.CreatedBy == _userId)
+            .Include(m => m.Movie)
+            .ToListAsync();
+
+        return View(reviews);
     }
 
     // GET: CRITICREVIEWS/Details/5
@@ -47,7 +68,7 @@ public class CriticReviewsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,MovieId,Movie,Description,Rating,IsPublished,CreatedBy,CreatedDate")] CriticReview criticreview)
+    public async Task<IActionResult> Create([Bind("Id,MovieId,Description,Rating,IsPublished,CreatedBy,CreatedDate")] CriticReview criticreview)
     {
         if (ModelState.IsValid)
         {
@@ -79,7 +100,7 @@ public class CriticReviewsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,MovieId,Movie,Description,Rating,IsPublished,CreatedBy,CreatedDate")] CriticReview criticreview)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,MovieId,Description,Rating,IsPublished,CreatedBy,CreatedDate")] CriticReview criticreview)
     {
         if (id != criticreview.Id)
         {

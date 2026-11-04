@@ -10,5 +10,6 @@
         // TO-DO: add a new function to delete a file to handle when trail records are deleted
         //
 
+        public Task<bool> DeleteFileAsync(string fileName);
     }
 }

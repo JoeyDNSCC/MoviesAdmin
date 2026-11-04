@@ -26,7 +26,7 @@ namespace MoviesAdmin.Services
         }
 
 
-        // func from interface file
+        // upload images
         public async Task<string> UploadFileAsync(IFormFile file, string fileName)
         {
             // get client for containerName (e.g. "movies" or "uploads")
@@ -50,6 +50,22 @@ namespace MoviesAdmin.Services
 
             // return url for the savedfile
             return blobClient.Uri.ToString();
+        }
+
+        // delete images
+        public async Task<bool> DeleteFileAsync(string fileName)
+        {
+            // get container client
+            var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+            // get blob client for specified file
+            var blobClient = containerClient.GetBlobClient(fileName);
+
+            // Delete the blob
+            var response = await blobClient.DeleteIfExistsAsync();
+
+            // return true if deleted, false if not found
+            return response.Value;
         }
     }
 

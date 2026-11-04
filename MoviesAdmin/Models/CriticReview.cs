@@ -8,7 +8,7 @@ namespace MoviesAdmin.Models
         [Required]
         public int Id { get; set; }
 
-        // foreign 
+        // foreign key
         [Required]
         public int MovieId { get; set; }
 
@@ -19,7 +19,7 @@ namespace MoviesAdmin.Models
 
         [Required]
         [MaxLength(2048)] //give the critics plenty of space to explain their position
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         [Range(1,5)] // I havent tested if this is <5 or <=5

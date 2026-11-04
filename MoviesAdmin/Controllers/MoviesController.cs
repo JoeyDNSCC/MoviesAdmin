@@ -130,9 +130,9 @@ public class MoviesController : Controller
             // generate unique file name to prevent overwriting
             var extension = Path.GetExtension(imageFile!.FileName);
             var uniqueFileName = $"{Guid.NewGuid()}{extension}";
-
+            
             // save file in azure
-            string imageUrl = await _blobService.UploadFileAsync(imageFile, imageFile.FileName);
+            string imageUrl = await _blobService.UploadFileAsync(imageFile, uniqueFileName);
             // save image url in 
             movie.ImageUrl = imageUrl;
 
@@ -241,6 +241,12 @@ public class MoviesController : Controller
         var movie = await _context.Movie.FindAsync(id);
         if (movie != null)
         {
+            // get file name from Url
+            var fileName = Path.GetFileName(new Uri(movie.ImageUrl).LocalPath);
+            // delete from azure
+            await _blobService.DeleteFileAsync(fileName);
+
+            // delete movie obejct from DB
             _context.Movie.Remove(movie);
         }
 
