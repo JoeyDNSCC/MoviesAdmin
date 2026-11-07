@@ -1,125 +1,200 @@
+
+/* theme colors */
+
 :root {
     --theme-primary: #ffca3b;
     --theme-secondary: #ffb300;
     --theme-body-bg: #fff3cd;
     --theme-element-bg: #e8dbba;
     --theme-border: #deb033;
-
-    --bs-primary:var(--theme-primary);
-    --bs-secondary:var(--theme-secondary);
-    --bs-body-bg:var(--them-body-bg);
-    --bs-border-color:var(--theme-border);
+    --theme-text: #332600;
+    --theme-hover: #dba000;
+    /* Bootstrap overrides */
+    --bs-primary: var(--theme-primary);
+    --bs-secondary: var(--theme-secondary);
+    --bs-success: #ffb300;
+    --bs-info: #dbc170;
+    --bs-light: #fff3cd;
+    --bs-dark: #8a6500;
+    --bs-body-bg: var(--theme-body-bg);
+    --bs-body-color: var(--theme-text);
+    --bs-border-color: var(--theme-border);
+    --bs-link-color: #8a6500;
+    --bs-link-hover-color: #5c4300;
 }
 
+/* general page styling*/
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-/*copy pasted buttons from bootstrap and modified hex-codes*/
-.btn-primary {
-    --bs-btn-color: #000;
-    --bs-btn-bg: #ffca3b;
-    --bs-btn-border-color: #deb033;
-    --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #ffb300;
-    --bs-btn-hover-border-color: dba000;
-    --bs-btn-focus-shadow-rgb: 49, 132, 253;
-    --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #dba000;
-    --bs-btn-active-border-color: #0a53be;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #ffca3b;
-    --bs-btn-disabled-border-color: #ffca3b;
-}
-.btn-secondary {
-    --bs-btn-color: #000;
-    --bs-btn-bg: #FFE082;
-    --bs-btn-border-color: #FFE082;
-    --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #DBC170;
-    --bs-btn-hover-border-color: #DBC170;
-    --bs-btn-focus-shadow-rgb: 130, 138, 145;
-    --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #565e64;
-    --bs-btn-active-border-color: #51585e;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #FFE082;
-    --bs-btn-disabled-border-color: #FFE082;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: var(--theme-body-bg);
+    color: var(--theme-text);
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
-}
+/* navigation */
 
 .my-navbar {
-    background-color: #c9ad7f;
-    background-color: #ffca3b;
+    background-color: var(--theme-primary);
+    border-bottom: 2px solid var(--theme-border);
 }
 
 .navbar-logo {
     max-height: 40px;
-    max-width: auto;
+    max-width: 100%;
 }
 
-.thumbnail{
+/*.my-navbar .nav-link {
+    color: var(--theme-text);
+    border-radius: 6px;
+    padding: 8px 12px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+    .my-navbar .nav-link:hover {
+        background-color: rgba(219, 160, 0, 0.2);
+        color: #5c4300;
+    }*/
+
+    /* Highlight the currently active page */
+    /*.my-navbar .nav-link.active {
+        background-color: rgba(219, 160, 0, 0.25);
+        color: #5c4300;
+        font-weight: 600;
+    }*/
+
+/* buttons */
+
+.btn-primary {
+    --bs-btn-color: #000;
+    --bs-btn-bg: var(--theme-primary);
+    --bs-btn-border-color: var(--theme-border);
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: var(--theme-secondary);
+    --bs-btn-hover-border-color: var(--theme-hover);
+    --bs-btn-focus-shadow-rgb: 222, 176, 51;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: var(--theme-hover);
+    --bs-btn-active-border-color: var(--theme-hover);
+    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-bg: var(--theme-primary);
+    --bs-btn-disabled-border-color: var(--theme-border);
+}
+
+.btn-secondary {
+    --bs-btn-color: #000;
+    --bs-btn-bg: #ffe082;
+    --bs-btn-border-color: var(--theme-border);
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #dbc170;
+    --bs-btn-hover-border-color: var(--theme-hover);
+    --bs-btn-focus-shadow-rgb: 222, 176, 51;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: var(--theme-hover);
+    --bs-btn-active-border-color: var(--theme-hover);
+    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-bg: #ffe082;
+    --bs-btn-disabled-border-color: var(--theme-border);
+}
+
+/* input fields*/
+
+.form-control,
+.form-control-plaintext,
+.form-select,
+.form-check-input {
+    background-color: var(--theme-element-bg);
+    border: 1px solid var(--theme-border);
+    color: var(--theme-text);
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: #fff8e5;
+        border-color: var(--theme-secondary);
+        color: var(--theme-text);
+        box-shadow: 0 0 0 0.2rem rgba(255, 179, 0, 0.25);
+    }
+
+    .form-check-input:checked {
+        background-color: var(--theme-secondary);
+        border-color: var(--theme-border);
+    }
+
+    .form-control::placeholder {
+        color: #806a36;
+        opacity: 0.8;
+    }
+
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: #806a36;
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* on focus*/
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 179, 0, 0.35);
+}
+
+/* tables */
+
+.my-table th,
+.my-table td {
+    background-color: var(--theme-element-bg);
+    border-color: var(--theme-border);
+    color: var(--theme-text);
+}
+
+.table-header {
+    color: var(--theme-text);
+}
+
+/* images*/
+
+.thumbnail {
     width: auto;
-    max-height: 60px;
+    max-height: 100px;
 }
 
-.title {
-    width: 6vw;
-    max-height: 60px;
+.big-picture {
+    max-width: 240px;
+    max-height: 100%;
+}
+
+/* table column sizing */
+
+.index-cell {
+    max-height: 100px;
     overflow-y: auto;
     white-space: normal;
     overflow-wrap: break-word;
 }
-.description {
-    width: 15vw;
-    max-height: 60px;
-    overflow-y: auto;
-    white-space: normal;
-    overflow-wrap: break-word;
-}
-.genre {
-    width: 6vw;
-    max-height: 60px;
-    overflow-y: auto;
-    white-space: normal;
-    overflow-wrap: break-word;
-}
-.rating {
-    width: 4vw;
-    max-height: 60px;
-    overflow-y: auto;
-    white-space: normal;
-    overflow-wrap: break-word;
-}
+
+
+/* button arrangement in table */
+
 .actions {
     display: flex;
     flex-direction: column;
@@ -127,17 +202,59 @@ body {
     height: 100%;
 }
 
-.my-table th,
-.my-table td {
-    background-color: #e8dbba;
-    border-color: black;
+
+
+/* Image Drop Zone */
+.drop-zone {
+    border: 2px dashed #adb5bd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.big-picture {
-    max-width: 240px;
-    max-height: auto;
-}
+    .drop-zone:hover,
+    .drop-zone.drag-over {
+        border-color: #0d6efd;
+        background-color: #e7f1ff;
+    }
 
-.table-header {
-    color: #000;
+    .drop-zone i {
+        font-size: 48px;
+        color: #6c757d;
+        transition: color 0.2s ease;
+    }
+
+    .drop-zone:hover i,
+    .drop-zone.drag-over i {
+        color: #0d6efd;
+    }
+
+    .drop-zone h5 {
+        margin-top: 12px;
+        font-weight: 600;
+    }
+
+    .drop-zone p {
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+
+        .drop-zone p span {
+            color: #0d6efd;
+            font-weight: 600;
+        }
+
+    .drop-zone small {
+        color: #adb5bd;
+    }
+
+.selected-image {
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    overflow-wrap: anywhere;
 }

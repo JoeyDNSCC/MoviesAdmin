@@ -13,10 +13,14 @@
         </p>
     }
 
+    @* TO-DO: add search bar *@
+    
 <table class="table my-table">
         <thead>
             <tr>
-                <th>@*Sort By:*@</th>
+                <th>
+                    @* Sort By: *@
+                </th>
 
                 <th> @*call view onclick to refresh page & send the string thru param*@
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSort"]" class="table-header">
@@ -55,48 +59,47 @@
         <tbody>
     @foreach (var item in Model) {
             <tr>
-                <td>
+                <td class="index-cell">
                     <img src="@item.ImageUrl" alt="@item.Title" class="thumbnail" />
                 </td>
-                <td>
-                    <div class="title">
+                <td class="index-cell">
                         @Html.DisplayFor(model => item.Title)
-                    </div>
                 </td>
 
 
-                <td>
+                <td class ="index-cell">
                     @Html.DisplayFor(model => item.Genre.Title)
                 </td>
-                <td>
+                <td class="index-cell">
                     @Html.DisplayFor(model => item.AudienceRating.Title)
                 </td>
 
 
                 @*runtime math here*@
-                <td>
+                <td class="index-cell">
                     @{
                         int hours = item.Runtime / 60;
                         int minutes = item.Runtime % 60;
                     }
                     @hours h @minutes.ToString("00") min
                 </td>
-                <td>
+                <td class="index-cell">
                     @Html.DisplayFor(model => item.ReleaseDate)
                 </td>
-                <td>
+                <td class="index-cell">
                     @Html.DisplayFor(model => item.CreatedDate)
                 </td>
                 <td>
                     <div class="actions">
                         @if(User.IsInRole("Admin"))
                         {
-                            <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Edit</a>
-                            <a asp-action="Details" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Edit" class="btn btn-primary btn-sm mb-1" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Details" class="btn btn-primary btn-sm mb-1" asp-route-id="@item.Id">Details</a>
                             <a asp-action="Delete" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Delete</a>
                         } else
                         {
-                            <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Details" class="btn btn-primary mb-2" asp-route-id="@item.Id">Details</a>
+                            <a asp-controller="CriticReviews" asp-action="Create" asp-route-movieId="@item?.Id" class="btn btn-primary">Create Review</a>
                         }
                     </div>
                 </td>

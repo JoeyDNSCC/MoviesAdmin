@@ -55,7 +55,7 @@ namespace MoviesAdmin.Models
         // url to image in azure storage
         public string ImageUrl { get; set; } = string.Empty;
 
-        [Display(Name = "Last Modified")] //will change actual varname later
+        [Display(Name = "Created Date")] //will change actual varname later
         public DateTime CreatedDate { get; set; } = DateTime.Now; // timestamp for object creation
 
 

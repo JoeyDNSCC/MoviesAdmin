@@ -1,10 +1,13 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin;
 using MoviesAdmin.Models;
 
+[Authorize(Roles = "Critic")]
 public class CriticReviewsController : Controller
 {
     // read-only must be initialized in constructor
@@ -17,7 +20,6 @@ public class CriticReviewsController : Controller
     public CriticReviewsController(MoviesAdminContext context)
     {
         _context = context;
-        //_userId = User.GetUserId();
     }
     //user not available when constructor is call
     // OnActionExecuting() is called after constructor is called, but before action method is called
@@ -30,6 +32,7 @@ public class CriticReviewsController : Controller
     // GET: CRITICREVIEWS
     public async Task<IActionResult> Index()    
     {
+
         // get reviews for currently logged-in user
         var reviews = await _context.CriticReview
             .Where(m => m.CreatedBy == _userId)
@@ -48,6 +51,7 @@ public class CriticReviewsController : Controller
         }
 
         var criticreview = await _context.CriticReview
+            .Include(m => m.Movie)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (criticreview == null)
         {
@@ -58,8 +62,25 @@ public class CriticReviewsController : Controller
     }
 
     // GET: CRITICREVIEWS/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create(int? movieId)
     {
+        if (movieId == null) return NotFound();
+
+        // if same movie and same user
+        bool alreadyReviewed = await _context.CriticReview
+            .AnyAsync(r => r.MovieId == movieId && r.CreatedBy == _userId);
+
+        if (alreadyReviewed)
+        {
+            // using temp data to do the error the same way we did in Mobile
+            TempData["Error"] = "You have already reviewed this movie.";
+
+            // params are: action, controller, route
+            return RedirectToAction("Details", "Movies", new { id = movieId });
+        }
+        
+        ViewBag.MovieId = movieId;
+
         return View();
     }
 
@@ -68,31 +89,56 @@ public class CriticReviewsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,MovieId,Description,Rating,IsPublished,CreatedBy,CreatedDate")] CriticReview criticreview)
+    public async Task<IActionResult> Create([Bind("MovieId,Description,Rating,IsPublished")] CriticReview criticReview)
     {
+
+        bool alreadyReviewed = await _context.CriticReview
+            .AnyAsync(r => r.MovieId == criticReview.MovieId && r.CreatedBy == _userId);
+
+        if (alreadyReviewed)
+        {
+            // using temp data to do the error the same way we did in Mobile
+            TempData["Error"] = "You have already reviewd this movie.";
+
+            // params are: action, controller, route
+            return RedirectToAction("details", "Movies", new { id = criticReview.MovieId });
+        }
+
+        // autofill CreatedBy
+        criticReview.CreatedBy = _userId!;
+        criticReview.CreatedDate = DateTime.Now;
+
+        // default create stuff
         if (ModelState.IsValid)
         {
-            _context.Add(criticreview);
+            _context.Add(criticReview);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
-        return View(criticreview);
+
+        ViewBag.MovieId = criticReview.MovieId;
+        return View(criticReview);
     }
 
     // GET: CRITICREVIEWS/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
+        if (id == null) return NotFound();
 
-        var criticreview = await _context.CriticReview.FindAsync(id);
-        if (criticreview == null)
+        var criticReview = await _context.CriticReview
+            //.Include(m => m.Movie)
+            .FindAsync(id);
+
+        if (criticReview == null) return NotFound();
+        if (criticReview.IsPublished) return BadRequest();
+        if (criticReview.CreatedBy != _userId) return BadRequest();
+
+        if (criticReview == null)
         {
             return NotFound();
         }
-        return View(criticreview);
+        return View(criticReview);
     }
 
     // POST: CRITICREVIEWS/Edit/5
@@ -100,23 +146,35 @@ public class CriticReviewsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,MovieId,Description,Rating,IsPublished,CreatedBy,CreatedDate")] CriticReview criticreview)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,MovieId,Description,Rating,IsPublished")] CriticReview criticReview)
     {
-        if (id != criticreview.Id)
-        {
-            return NotFound();
-        }
+        if (id != criticReview.Id) return NotFound();
 
         if (ModelState.IsValid)
         {
             try
             {
-                _context.Update(criticreview);
+                // Retrieve original record
+                var existingReview = await _context.CriticReview.FindAsync(id);
+
+                if (existingReview == null) return NotFound();
+
+                if (existingReview.IsPublished) return BadRequest();
+                if (existingReview.CreatedBy != _userId) return BadRequest();
+
+                //criticReview.CreatedBy = _userId!;
+
+                //only update editable properties
+                existingReview.Description = criticReview.Description;
+                existingReview.Rating = criticReview.Rating;
+                existingReview.IsPublished = criticReview.IsPublished;
+                // instead of using the .Update()
+                //_context.Update(criticReview);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CriticReviewExists(criticreview.Id))
+                if (!CriticReviewExists(criticReview.Id))
                 {
                     return NotFound();
                 }
@@ -127,7 +185,7 @@ public class CriticReviewsController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(criticreview);
+        return View(criticReview);
     }
 
     // GET: CRITICREVIEWS/Delete/5

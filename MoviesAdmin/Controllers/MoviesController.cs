@@ -30,8 +30,6 @@ public class MoviesController : Controller
         {
             Console.WriteLine("Logged in user: " + user);
         }
-        
-        // TO-DO: allow sorting by all fields
 
         //take str from click event & determine if asc/desc
         ViewData["TitleSort"] = sortOrder == "title" ? "title_desc" : "title";
@@ -85,6 +83,7 @@ public class MoviesController : Controller
         var movie = await _context.Movie
             .Include(m => m.Genre)
             .Include(m => m.AudienceRating)
+            .Include(m => m.Reviews)
             .FirstOrDefaultAsync(m => m.Id == id);
 
         if (movie == null)
@@ -106,9 +105,6 @@ public class MoviesController : Controller
         return View();
     }
 
-    /*
-     TO-DO: Handle image being required
-     */
 
     // POST: MOVIES/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -133,7 +129,7 @@ public class MoviesController : Controller
             
             // save file in azure
             string imageUrl = await _blobService.UploadFileAsync(imageFile, uniqueFileName);
-            // save image url in 
+            // save image url in context
             movie.ImageUrl = imageUrl;
 
             // save record in database
@@ -183,8 +179,9 @@ public class MoviesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles="Admin")]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,GenreId,AudienceRatingId,Runtime,ReleaseDate,CreatedDate,ImageUrl")] Movie movie)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Description,GenreId,AudienceRatingId,Runtime,ReleaseDate,CreatedDate,ImageUrl")] Movie movie, IFormFile? imageFile)
     {
+
         if (id != movie.Id)
         {
             return NotFound();
@@ -194,6 +191,32 @@ public class MoviesController : Controller
         {
             try
             {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    // Generate a unique filename
+                    var extension = Path.GetExtension(imageFile.FileName);
+                    var uniqueFileName = $"{Guid.NewGuid()}{extension}";
+
+                    // Upload new image first
+                    string imageUrl = await _blobService.UploadFileAsync(imageFile, uniqueFileName);
+
+                    // Delete old image
+                    if (!string.IsNullOrEmpty(movie.ImageUrl))
+                    {
+                        var fileName = Path.GetFileName(new Uri(movie.ImageUrl).LocalPath);
+
+                        var isDeleted = await _blobService.DeleteFileAsync(fileName);
+
+                        if (!isDeleted)
+                        {
+                            Console.WriteLine("Something went wrong with the image deletion");
+                        }
+                    }
+
+                    // Assign new image URL
+                    movie.ImageUrl = imageUrl;
+                }
+
                 _context.Update(movie);
                 await _context.SaveChangesAsync();
             }
@@ -244,9 +267,11 @@ public class MoviesController : Controller
             // get file name from Url
             var fileName = Path.GetFileName(new Uri(movie.ImageUrl).LocalPath);
             // delete from azure
-            await _blobService.DeleteFileAsync(fileName);
+            var isDeleted = await _blobService.DeleteFileAsync(fileName);
+            if (!isDeleted) Console.WriteLine("Something went wrong with the image deletion");
+            
 
-            // delete movie obejct from DB
+            // delete movie obejct context
             _context.Movie.Remove(movie);
         }
 

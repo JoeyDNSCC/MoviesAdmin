@@ -21,41 +21,44 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link btn btn-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
+                                    <a class="nav-link btn btn-primary text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
                                 </li>
-                                @if (User.IsInRole("Admin")) 
-                                { 
+                                @if (User.IsInRole("Admin"))
+                                {
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
+                                        <a class="nav-link btn btn-primary text-dark" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="AudienceRatings" asp-action="Index">Ratings</a>
+                                        <a class="nav-link btn btn-primary text-dark" asp-area="" asp-controller="AudienceRatings" asp-action="Index">Ratings</a>
                                     </li>
                                 }
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="CriticReviews" asp-action="Index">Reviews</a>
-                                </li>
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-primary text-dark" asp-area="" asp-controller="CriticReviews" asp-action="Index">Reviews</a>
+                                    </li>
+                                }
                             }
-                        </ul>
+                    </ul>
                     <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Profile">@User.Identity.Name</a>
+                                <a class="nav-link btn btn-primary text-dark" asp-controller="Account" asp-action="Profile">@User.Identity.Name</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
+                                <a class="nav-link btn btn-primary text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link btn btn-primary text-dark" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
                         }
                     </ul>

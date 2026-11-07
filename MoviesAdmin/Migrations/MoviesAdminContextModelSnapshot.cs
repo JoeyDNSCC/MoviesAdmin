@@ -51,7 +51,7 @@ namespace MoviesAdmin.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -72,7 +72,8 @@ namespace MoviesAdmin.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieId", "CreatedBy")
+                        .IsUnique();
 
                     b.ToTable("CriticReview");
                 });

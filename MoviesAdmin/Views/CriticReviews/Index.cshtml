@@ -7,59 +7,91 @@
 <h1>My Reviews</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-controller="Movies" asp-action="Index" class="btn btn-primary">To Movies</a>
 </p>
+
+
+<h4>Drafts</h4>
 <table class="table my-table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Movie.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Movie)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsPublished)
+                @Html.DisplayNameFor(model => model.CreatedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Where(w => !w.IsPublished))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Movie.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CreatedDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Published</h4>
+<table class="table my-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedDate)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.Movie.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.IsPublished)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.CreatedDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Where(w => w.IsPublished)) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Movie.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CreatedDate)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+

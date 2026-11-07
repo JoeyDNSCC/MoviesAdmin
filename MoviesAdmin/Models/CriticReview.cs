@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace MoviesAdmin.Models
@@ -6,6 +7,7 @@ namespace MoviesAdmin.Models
     public class CriticReview
     {
         [Required]
+        [Display(Name ="Movie")]
         public int Id { get; set; }
 
         // foreign key
@@ -26,12 +28,15 @@ namespace MoviesAdmin.Models
         public int Rating { get; set; }
 
         [Required]
+        [Display(Name ="Published")]
         public bool IsPublished { get; set; }
 
-        [Required]
-        public string CreatedBy { get; set; } = string.Empty;   //not sure how our users are going to be stored / formatted yet
+
+        [Display(Name = "Created By")]
+        public string CreatedBy { get; set; } = string.Empty;
 
         [ScaffoldColumn(false)]
+        [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

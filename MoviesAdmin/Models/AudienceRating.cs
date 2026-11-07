@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MoviesAdmin.Models
 {
+    [Display(Name ="Rating")]
     public class AudienceRating
     {
         [Required]

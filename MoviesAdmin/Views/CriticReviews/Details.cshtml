@@ -1,66 +1,101 @@
+@using Microsoft.AspNetCore.Html
 @model MoviesAdmin.Models.CriticReview
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Review</h1>
 
-<div>
-    <h4>CriticReview</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MovieId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MovieId)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Movie)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPublished)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPublished)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-    </dl>
+<hr />
+
+<div class="row">
+
+    @* Review details - full width on mobile and desktop *@
+    <div class="col-12">
+
+        <h5>@Html.DisplayNameFor(model => model.Description)</h5>
+
+        @{
+            var descriptionWithBreaks = new HtmlString(
+                Model.Description?
+                    .Replace("\r\n", "<br/>")
+                    .Replace("\n", "<br/>")
+                    .Replace("\r", "<br/>") ?? ""
+            );
+        }
+
+        <p>@descriptionWithBreaks</p>
+
+        <hr />
+
+        <div class="row">
+            <strong class="col-6">
+                @Html.DisplayNameFor(model => model.Movie):
+            </strong>
+
+            <p class="col-6 text-end">
+                @Html.DisplayFor(model => model.Movie.Title)
+            </p>
+        </div>
+
+        <div class="row">
+            <strong class="col-6">
+                @Html.DisplayNameFor(model => model.Rating):
+            </strong>
+
+            <p class="col-6 text-end">
+                @Html.DisplayFor(model => model.Rating) Stars
+            </p>
+        </div>
+
+        <div class="row">
+            <strong class="col-6">
+                @Html.DisplayNameFor(model => model.IsPublished):
+            </strong>
+            @if (Model.IsPublished)
+            {
+                <p class="col-6 text-end">
+                    Yes
+                </p>
+            } else
+            {
+                <p class="col-6 text-end">
+                    No
+                </p>
+            }
+            
+               
+        </div>
+
+        <div class="row">
+            <strong class="col-6">
+                @Html.DisplayNameFor(model => model.CreatedBy):
+            </strong>
+
+            <p class="col-6 text-end">
+                @User.Identity.Name
+            </p>
+        </div>
+
+        <div class="row">
+            <strong class="col-6">
+                @Html.DisplayNameFor(model => model.CreatedDate):
+            </strong>
+
+            <p class="col-6 text-end">
+                @Html.DisplayFor(model => model.CreatedDate)
+            </p>
+        </div>
+
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="mt-3">
+    @* user check is redundant but whatever *@
+    @if (!Model.IsPublished && User.GetUserId() == Model.CreatedBy)
+    {
+        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Edit Review</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

@@ -19,6 +19,7 @@ public class AudienceRatingsController : Controller
     {
         return View(await _context.AudienceRating
             .Include(a => a.Movies)
+            .OrderBy(a => a.sortOrder)
             .ToListAsync());
     }
 
