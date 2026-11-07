@@ -204,57 +204,80 @@ body {
 
 
 
+
 /* Image Drop Zone */
+
 .drop-zone {
-    border: 2px dashed #adb5bd;
+    border: 2px dashed var(--theme-border);
     border-radius: 12px;
     padding: 40px 20px;
     text-align: center;
-    background-color: #f8f9fa;
+    background-color: var(--theme-element-bg);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-    .drop-zone:hover,
-    .drop-zone.drag-over {
-        border-color: #0d6efd;
-        background-color: #e7f1ff;
-    }
+.drop-zone:hover,
+.drop-zone.drag-over {
+    border-color: var(--theme-hover);
+    background-color: #fff0bd;
+    box-shadow: 0 0 0 3px rgba(219, 160, 0, 0.12);
+}
 
-    .drop-zone i {
-        font-size: 48px;
-        color: #6c757d;
-        transition: color 0.2s ease;
-    }
+.drop-zone i {
+    font-size: 48px;
+    color: var(--theme-secondary);
+    transition: all 0.2s ease;
+}
 
-    .drop-zone:hover i,
-    .drop-zone.drag-over i {
-        color: #0d6efd;
-    }
+.drop-zone:hover i,
+.drop-zone.drag-over i {
+    color: var(--theme-hover);
+    transform: translateY(-3px);
+}
 
-    .drop-zone h5 {
-        margin-top: 12px;
-        font-weight: 600;
-    }
+.drop-zone h5 {
+    margin-top: 12px;
+    font-weight: 600;
+    color: var(--theme-text);
+}
 
-    .drop-zone p {
-        color: #6c757d;
-        margin-bottom: 5px;
-    }
+.drop-zone p {
+    color: #806a36;
+    margin-bottom: 5px;
+}
 
-        .drop-zone p span {
-            color: #0d6efd;
-            font-weight: 600;
-        }
+.drop-zone p span {
+    color: var(--theme-hover);
+    font-weight: 700;
+}
 
-    .drop-zone small {
-        color: #adb5bd;
-    }
+.drop-zone small {
+    color: #806a36;
+}
 
 .selected-image {
-    padding: 10px;
-    background: #f8f9fa;
+    padding: 12px 15px;
+    background-color: var(--theme-element-bg);
+    border: 1px solid var(--theme-border);
     border-radius: 8px;
     font-size: 14px;
+    color: var(--theme-text);
     overflow-wrap: anywhere;
 }
+
+.selected-image i {
+    color: var(--theme-hover);
+    font-size: 20px;
+}
+
+
+#movieImagePreview {
+    transition: opacity 0.2s ease;
+    border: 2px solid var(--theme-border);
+    border-radius: 8px;
+}
+
+    #movieImagePreview:hover {
+        border-color: var(--theme-hover);
+    }

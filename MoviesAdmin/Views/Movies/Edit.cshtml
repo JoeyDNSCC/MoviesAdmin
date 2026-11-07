@@ -8,7 +8,14 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-5">
+
+    <div class="col-12 col-md-6 order-1 order-md-2 mb-3">
+        <div>
+            <img id="movieImagePreview" src="@Model.ImageUrl" alt="@Model.Title" class="w-100 img-fluid img-thumbnail" />
+        </div>
+    </div>
+
+    <div class="col 12 col order-2 order-md-1">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -45,15 +52,13 @@
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <img src="@Model.ImageUrl" alt="@Model.Title" class="w-75 img-thumbnail" />
 
-            </div>
+
 
             <div class="mb-3">
-                <label class="control-label">Change Image</label>
-                <input type="file" id="ImageFile" name="ImageFile" class="form-control"/>
+                <partial name="_ImageDropZone" />
             </div>
+
 
             <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -67,5 +72,7 @@
 
 
 @section Scripts {
+    <script src="~/js/image-dropzone.js"></script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
