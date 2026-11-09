@@ -278,6 +278,6 @@ body {
     border-radius: 8px;
 }
 
-    #movieImagePreview:hover {
-        border-color: var(--theme-hover);
-    }
+#movieImagePreview:hover {
+    border-color: var(--theme-hover);
+}
