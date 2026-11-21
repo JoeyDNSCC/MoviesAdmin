@@ -1,41 +1,40 @@
-﻿//namespace MoviesAdmin.Services
-//{
-//    public interface IUserSnapshotService
-//    {
-//        Task AddUserAsync(string userId, string email, string name);
-//    }
+﻿using Microsoft.EntityFrameworkCore;
+using MoviesAdmin.Models;
 
-//    public class UserSnapshotService : IUserSnapshotService
-//    {
-//        private readonly MoviesAdminContext _context;
+namespace MoviesAdmin.Services
+{
 
-//        public UserSnapshotService(MoviesAdminContext context)
-//        {
-//            _context = context;
-//        }
+    public class UserSnapshotService : IUserSnapshotService
+    {
+        private readonly MoviesAdminContext _context;
 
-//        public async Task AddUserAsync(string userId, string email, string name)
-//        {
-//            var userSnapshot = await _context.UserSnapshot.FirstOrDefaultAsync(u => u.UserId == userId);
+        public UserSnapshotService(MoviesAdminContext context)
+        {
+            _context = context;
+        }
 
-//            // If the user doesn't exist, add them to the database. Otherwise, update their email and name.
-//            if (userSnapshot == null)
-//            {
-//                _context.UserSnapshot.Add(new UserSnapshot
-//                {
-//                    UserId = userId,
-//                    Email = email,
-//                    Name = name
-//                });
-//            }
-//            else
-//            {
-//                userSnapshot.Email = email;
-//                userSnapshot.Name = name;
-//                _context.UserSnapshot.Update(userSnapshot);
-//            }
+        public async Task AddUserAsync(string userId, string email, string name)
+        {
+            var userSnapshot = await _context.UserSnapshot.FirstOrDefaultAsync(u => u.UserId == userId);
 
-//            await _context.SaveChangesAsync();
-//        }
-//    }
-//}
+            // If the user doesn't exist, add them to the database. Otherwise, update their email and name.
+            if (userSnapshot == null)
+            {
+                _context.UserSnapshot.Add(new UserSnapshot
+                {
+                    UserId = userId,
+                    Email = email,
+                    Name = name
+                });
+            }
+            else
+            {
+                userSnapshot.Email = email;
+                userSnapshot.Name = name;
+                _context.UserSnapshot.Update(userSnapshot);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+    }
+}

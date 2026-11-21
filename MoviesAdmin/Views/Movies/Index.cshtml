@@ -98,7 +98,7 @@
                             <a asp-action="Delete" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Delete</a>
                         } else
                         {
-                            <a asp-action="Details" class="btn btn-primary mb-2" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Details" class="btn btn-primary mb-md-2 mt-1" asp-route-id="@item.Id">Details</a>
                             <a asp-controller="CriticReviews" asp-action="Create" asp-route-movieId="@item?.Id" class="btn btn-primary">Create Review</a>
                         }
                     </div>
